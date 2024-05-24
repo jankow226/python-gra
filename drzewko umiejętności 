@@ -1,0 +1,65 @@
+class Skill:
+    def __init__(self, name, description, prerequisites=None):
+        self.name = name
+        self.description = description
+        self.prerequisites = prerequisites if prerequisites else []
+
+    def __repr__(self):
+        return f"Skill(name={self.name}, prerequisites={self.prerequisites})"
+
+
+class SorcererSkillTree:
+    def __init__(self):
+        self.skills = {}
+        self.create_skills()
+
+    def create_skills(self):
+        # Basic skills
+        self.skills['Fireball'] = Skill('Fireball', 'A basic fire attack spell.')
+        self.skills['Ice Shard'] = Skill('Ice Shard', 'A basic ice attack spell.')
+
+        # Advanced skills
+        self.skills['Flame Wave'] = Skill('Flame Wave', 'A wave of fire that damages all enemies.', prerequisites=['Fireball'])
+        self.skills['Frost Nova'] = Skill('Frost Nova', 'A burst of ice that damages and freezes all enemies.', prerequisites=['Ice Shard'])
+
+        # Master skills
+        self.skills['Inferno'] = Skill('Inferno', 'A powerful fire spell that incinerates all enemies.', prerequisites=['Flame Wave'])
+        self.skills['Blizzard'] = Skill('Blizzard', 'A powerful ice spell that freezes all enemies.', prerequisites=['Frost Nova'])
+
+    def can_learn(self, skill_name, known_skills):
+        if skill_name not in self.skills:
+            return False
+        skill = self.skills[skill_name]
+        for prereq in skill.prerequisites:
+            if prereq not in known_skills:
+                return False
+        return True
+
+    def learn_skill(self, skill_name, known_skills):
+        if self.can_learn(skill_name, known_skills):
+            known_skills.append(skill_name)
+            print(f"Skill {skill_name} learned!")
+        else:
+            print(f"Cannot learn {skill_name}. Prerequisites not met.")
+
+    def display_tree(self):
+        for skill_name, skill in self.skills.items():
+            print(f"{skill_name}: {skill.description} (Prerequisites: {', '.join(skill.prerequisites)})")
+
+
+# Example usage
+if __name__ == "__main__":
+    sorcerer_tree = SorcererSkillTree()
+    known_skills = []
+
+    sorcerer_tree.display_tree()
+
+    sorcerer_tree.learn_skill('Fireball', known_skills)
+    sorcerer_tree.learn_skill('Flame Wave', known_skills)
+    sorcerer_tree.learn_skill('Inferno', known_skills)
+    sorcerer_tree.learn_skill('Blizzard', known_skills)
+    sorcerer_tree.learn_skill('Ice Shard', known_skills)
+    sorcerer_tree.learn_skill('Frost Nova', known_skills)
+    sorcerer_tree.learn_skill('Blizzard', known_skills)
+
+    print(f"Known skills: {known_skills}")
