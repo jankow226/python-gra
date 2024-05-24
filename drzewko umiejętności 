@@ -46,20 +46,3 @@ class SorcererSkillTree:
         for skill_name, skill in self.skills.items():
             print(f"{skill_name}: {skill.description} (Prerequisites: {', '.join(skill.prerequisites)})")
 
-
-# Example usage
-if __name__ == "__main__":
-    sorcerer_tree = SorcererSkillTree()
-    known_skills = []
-
-    sorcerer_tree.display_tree()
-
-    sorcerer_tree.learn_skill('Fireball', known_skills)
-    sorcerer_tree.learn_skill('Flame Wave', known_skills)
-    sorcerer_tree.learn_skill('Inferno', known_skills)
-    sorcerer_tree.learn_skill('Blizzard', known_skills)
-    sorcerer_tree.learn_skill('Ice Shard', known_skills)
-    sorcerer_tree.learn_skill('Frost Nova', known_skills)
-    sorcerer_tree.learn_skill('Blizzard', known_skills)
-
-    print(f"Known skills: {known_skills}")
